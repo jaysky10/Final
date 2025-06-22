@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d6efd" />
+  <title>Jaysky Logbook</title>
+
+  <!-- PWA Setup -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #0d6efd;
+    }
+    .section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0d6efd;
+      color: white;
+      margin-top: 15px;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b5ed7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jaysky Logbook</h1>
+
+  <!-- BENTA FORM -->
+  <div class="section">
+    <h2>Benta</h2>
+    <label for="saleDate">Petsa</label>
+    <input type="date" id="saleDate" />
+
+    <label for="product">Produkto</label>
+    <input type="text" id="product" placeholder="Hal. Vulcanizing Tool" />
+
+    <label for="quantity">Dami</label>
+    <input type="number" id="quantity" />
+
+    <label for="price">Presyo</label>
+    <input type="number" id="price" />
+
+    <button onclick="saveSale()">I-save ang Benta</button>
+  </div>
+
+  <!-- GASTOS FORM -->
+  <div class="section">
+    <h2>Gastos</h2>
+    <label for="expenseDate">Petsa</label>
+    <input type="date" id="expenseDate" value="2025-06-22" />
+
+    <label for="expenseType">Uri ng Gastos</label>
+    <input type="text" id="expenseType" placeholder="Hal. Materyales, Kuryente" />
+
+    <button onclick="saveExpense()">I-save ang Gastos</button>
+  </div>
+
+  <script>
+    function saveSale() {
+      const sale = {
+        date: document.getElementById('saleDate').value,
+        product: document.getElementById('product').value,
+        quantity: document.getElementById('quantity').value,
+        price: document.getElementById('price').value
+      };
+      localStorage.setItem('lastSale', JSON.stringify(sale));
+      alert("✅ Benta na-save!");
+    }
+
+    function saveExpense() {
+      const expense = {
+        date: document.getElementById('expenseDate').value,
+        type: document.getElementById('expenseType').value
+      };
+      localStorage.setItem('lastExpense', JSON.stringify(expense));
+      alert("✅ Gastos na-save!");
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('✅ Service Worker Registered'))
+        .catch(error => console.error('❌ Registration failed:', error));
+    }
+  </script>
+</body>
+  </html>
